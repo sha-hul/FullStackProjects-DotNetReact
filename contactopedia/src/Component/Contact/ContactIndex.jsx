@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import RandomContact from "./AddRandomContact";
 import RemoveAllContact from "./RemoveContact";
 import Contact from "./Contact";
@@ -71,12 +71,12 @@ const ContactIndex = () => {
       email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     };
     const duplicateContact = phoneBook.filter((item) => {
-      return item.name == newContact.name || item.email == newContact.email;
+      return item.name === newContact.name || item.email === newContact.email;
     });
-    if (newContact.name.trim() == "" || newContact.name == null) {
+    if (newContact.name.trim() === "" || newContact.name === null) {
       result.status = "error";
       result.errMsg = "Enter the Name";
-    } else if (newContact.email.trim() == "" || newContact.email == null) {
+    } else if (newContact.email.trim() === "" || newContact.email === null) {
       result.status = "error";
       result.errMsg = "Enter the email";
     } else if (!regex.email.test(newContact.email)) {
@@ -139,23 +139,56 @@ const ContactIndex = () => {
   };
 
   //handlerRemoveAll Contact
-  
+
   const handlerRemoveAll = () => {
     debugger;
     setphoneBook([]);
   };
 
-  //handlerUpdate Contact
+  //handlerUpdate Contact Edit button
   const handlerUpdateContact = (data) => {
     setIsUpdate(true);
     setUpdatedata(data);
   };
 
   // Log state changes after updates
-  useEffect(() => {
-    console.log(updateData); // This will log the updated updateData
-    console.log(isUpdate);   // This will log the updated isUpdate
-  }, [updateData, isUpdate]);  // Dependencies: logs when updateData or isUpdate changes
+  // useEffect(() => {
+  //   console.log(updateData); // This will log the updated updateData
+  //   console.log(isUpdate); // This will log the updated isUpdate
+  // }, [updateData, isUpdate]); // Dependencies: logs when updateData or isUpdate changes
+
+  //handler Cancel
+
+  const handlerCancel=()=>{
+    setIsUpdate(false);
+    setUpdatedata(undefined);
+  }
+
+  //handler update submission
+
+  const handlerUpdate = (data) => {
+    try {
+      let tempPhBook = [...phoneBook];
+      tempPhBook = tempPhBook.map((item) => {
+        if (item.id === data.id) {
+          return {
+            ...item, // Copy existing properties
+            email: data.email, // Update email
+            name: data.name, // Update name
+            phone: data.phone,
+          };
+        }
+        return item;
+      });
+      setphoneBook(tempPhBook);
+      setIsUpdate(false);
+      setUpdatedata(undefined);
+      return true;
+    } 
+    catch (error) {
+      return false;
+    }
+  };
 
   return (
     <div className="container-fluid vw-70 p-6 m-2">
@@ -170,7 +203,13 @@ const ContactIndex = () => {
           boxShadow: "0px 0px 3px 0px gray",
         }}
       >
-        <Contact contactHandler={handlerContact} />
+        <Contact
+          contactHandler={handlerContact}
+          isupdate={isUpdate}
+          contactData={updateData}
+          setCancel={handlerCancel}
+          updateDetails={handlerUpdate}
+        />
       </div>
       <div
         className="row m-4 p-2"

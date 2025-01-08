@@ -15,6 +15,17 @@ const OtherContact = (props) => {
     props.deleteContact(id);
   };
 
+  //Update Contact
+  const callupdateContact=()=>{
+    const _contactDetail = {
+      id,
+      name,
+      email,
+      phone,
+      isFavourite,
+    };
+    props.handlerUpdateContact(_contactDetail);
+  }
   return (
     <div
       className="row p-2 m-1"
@@ -54,6 +65,7 @@ const OtherContact = (props) => {
       <div className="col-2 my-3">
         <i
           class="bi bi-pencil-square text-primary fs-4 p-2 cursor-pointer"
+          onClick={callupdateContact}
           style={styleCursor}
         ></i>
         <i
