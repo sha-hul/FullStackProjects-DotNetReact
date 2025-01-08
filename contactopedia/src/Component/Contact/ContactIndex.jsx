@@ -159,10 +159,10 @@ const ContactIndex = () => {
 
   //handler Cancel
 
-  const handlerCancel=()=>{
+  const handlerCancel = () => {
     setIsUpdate(false);
     setUpdatedata(undefined);
-  }
+  };
 
   //handler update submission
 
@@ -184,8 +184,7 @@ const ContactIndex = () => {
       setIsUpdate(false);
       setUpdatedata(undefined);
       return true;
-    } 
-    catch (error) {
+    } catch (error) {
       return false;
     }
   };
