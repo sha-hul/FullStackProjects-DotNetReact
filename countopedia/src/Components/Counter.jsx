@@ -66,9 +66,7 @@ const Counter = () => {
           <img style={{width: "100%",cursor: "pointer",border: "1px solid green",}} className="p-4 rounded" src ={attachImg}   onClick={attack} />
         </div>
         <div className="col-6 col-md-3">
-        <div className="col-6 col-md-3">
           <img style={{width: "100%",cursor: "pointer",border: "1px solid green",}} className="p-4 rounded" src ={defendImg}   onClick={defend} />
-        </div>
         </div>
       </div>
       <div className="row mt-4">

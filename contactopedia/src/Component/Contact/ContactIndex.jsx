@@ -141,7 +141,6 @@ const ContactIndex = () => {
   //handlerRemoveAll Contact
 
   const handlerRemoveAll = () => {
-    debugger;
     setphoneBook([]);
   };
 

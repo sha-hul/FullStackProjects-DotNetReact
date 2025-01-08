@@ -32,7 +32,7 @@ const Contact = (props) => {
     if (isUpdate) {
       displayContact();
     }
-  });
+  },[isUpdate]);
   const displayContact = () => {
     const tempContact = { ...props.contactData }; // Create a copy to avoid mutating props
 
