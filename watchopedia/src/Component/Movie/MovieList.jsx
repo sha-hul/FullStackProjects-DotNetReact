@@ -1,6 +1,7 @@
 import AddMovie from "./AddMovie";
 import MoviePage from "./MoviePage";
 import react,{useState} from 'react';
+
 const MovieList = () => {
     const movieListDefault = [
         {id:1,name:"Titanic"},
