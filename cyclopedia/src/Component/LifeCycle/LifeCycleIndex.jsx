@@ -1,5 +1,5 @@
 import Instructor from "./Instructor";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useId } from "react";
 import axios from "axios";
 
 const LifeCycleIndex = () => {
@@ -12,6 +12,23 @@ const LifeCycleIndex = () => {
 
   const [formName, setFormName] = useState("");
   const [formFeedback, setFeedback] = useState("");
+  //Wrong Implementation
+  // const [totalRender, settotalRender] = useState(0);
+
+  //Correct Implementation by useRef
+  const totRender = useRef(0);
+  const focusTextarea = useRef(null);
+  const inputId = useId();
+
+  useEffect(() => {
+    // console.log("1. Runs on every render");
+    // settotalRender((prev)=> {return prev+1})
+    // console.log(totalRender);
+
+    totRender.current = totRender.current + 1;
+    console.log("Total Render : " + totRender.current);
+    focusTextarea.current.focus();
+  });
 
   // API Handler
   const getRandomData = async () => {
@@ -19,14 +36,10 @@ const LifeCycleIndex = () => {
       const response = await axios.get("https://randomuser.me/api/");
       return response;
     } catch (error) {
-      console.error("Error fetching random user:", error);
+      // console.error("Error fetching random user:", error);
       throw error;
     }
   };
-
-  useEffect(() => {
-    // console.log("1. Runs on every render");
-  });
 
   useEffect(() => {
     const addRandomContact = async () => {
@@ -51,7 +64,7 @@ const LifeCycleIndex = () => {
   }, []); // Dependency array added
 
   useEffect(() => {
-    // console.log("3. Runs when studentCount changes");
+    console.log("3. Runs on render studentCount");
     const addRandomContact = async () => {
       try {
         const conData = await getRandomData();
@@ -72,7 +85,7 @@ const LifeCycleIndex = () => {
 
         // Retrieve and log the updated details from localStorage
         const storedDetails = JSON.parse(localStorage.getItem("studentList"));
-        console.log(storedDetails);
+        // console.log(storedDetails);
       } catch (error) {
         console.error("Failed to fetch random contact:", error);
       }
@@ -81,15 +94,15 @@ const LifeCycleIndex = () => {
       addRandomContact();
     }
     return () => {
-      console.log("Cleanup for hideInstructor change");
+      // console.log("Cleanup for hideInstructor change");
     };
   }, [insDetail.studentCount]);
 
-  useEffect(() => {
-    return () => {
-      console.log("4. Runs on unmount");
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     // console.log("4. Runs on unmount");
+  //   };
+  // }, []);
 
   const handletoggleInstructor = () => {
     setInsDetails((prevState) => ({
@@ -125,10 +138,12 @@ const LifeCycleIndex = () => {
     });
     // Retrieve and log the updated details from localStorage
     const storedDetails = JSON.parse(localStorage.getItem("studentList"));
-    console.log(storedDetails);
+    // console.log(storedDetails);
   };
+
   return (
     <div className="container-fluid">
+      <h6 className="text-light">Total Render : {totRender.current} </h6>
       <i
         className={`bi ${
           insDetail.hideInstructor ? "bi-toggle-on" : "bi-toggle-off"
@@ -143,17 +158,26 @@ const LifeCycleIndex = () => {
         />
       ) : null}
       <br />
-      <h3 className="text-primary">Feedback Form</h3>
+      <h3 className="text-primary" >Feedback Form</h3>
+      <label className="text-light" htmlFor={`${inputId}-Name`}>Write your Name</label>
       <div className="text-light p-4">
         <input
+          id={`${inputId}-Name`}
           type="text"
           placeholder="Name.."
           className="form-control"
           onChange={(e) => setFormName(e.target.value)}
         />{" "}
         <br />
-        <p className="text-success">{formName}</p>
+        <p className="text-success" htmlFor={`${inputId}-Name`}>{formName}</p>
+        <br/>
+      <label htmlFor={`${inputId}-Feedback`}>Write your Feedback</label>
+      <br/>
+      <br/>
+
         <textarea
+          ref={focusTextarea}
+          id={`${inputId}-Feedback`}
           type="text"
           placeholder="Feedback.."
           className="form-control"

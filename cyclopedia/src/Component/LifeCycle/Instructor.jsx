@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import axios from "axios";
 
 const Instructor = (props) => {
-  useEffect(() => {
-    return () => {
-      console.log("5. Runs on unmount Instructor");
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     console.log("5. Runs on unmount Instructor");
+  //   };
+  // }, []);
 
   const handlerAddCount=(e)=>{
     props.updateCount();
