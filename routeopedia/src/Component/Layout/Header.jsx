@@ -1,5 +1,5 @@
 import logo from "../../Image/logo512.png";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 
@@ -23,16 +23,22 @@ const Header = () => {
             <div className="navbar-nav">
             <ul class="navbar-nav">
             <li class="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+                <NavLink className={({isActive})=>
+                  isActive ? 'nav-link active text-info' : 'nav-link'
+                } aria-current="page" to="/">Home</NavLink>
                 </li>
                 <li class="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
+                <NavLink className={({isActive})=>
+                  isActive ? 'nav-link active text-info' : 'nav-link'
+                } to="/about">About</NavLink>
                 </li>
                 <li class="nav-item">
-                <Link className="nav-link" to="/crypto">Crypto</Link>
+                <NavLink className={({isActive})=>
+                  isActive ? 'nav-link active text-info' : 'nav-link'
+                } to="/crypto/BTC/5">Crypto</NavLink>
                 </li>
                 <li class="nav-item">
-                <Link className="nav-link disabled" to="/notfound" tabIndex="-1" aria-disabled="true">NotFound</Link>
+                <NavLink className="nav-link disabled" to="/notfound" tabIndex="-1" aria-disabled="true">NotFound</NavLink>
                 </li>
                 <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,7 +47,7 @@ const Header = () => {
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <li><Link className="dropdown-item" to="/product">Product</Link></li>
                   <li><Link className="dropdown-item" to="/Product/list">ProductList</Link></li>
-                  <li><Link className="dropdown-item" to="/Product/Details">Product Details</Link></li>
+                  <li><Link className="dropdown-item" to="/Product/Details/10">Product Details</Link></li>
                   <li><Link className="dropdown-item" to="/Product/create">Create Product</Link></li>
                 </ul>
               </li>
