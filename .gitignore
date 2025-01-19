@@ -1,0 +1,11 @@
+# Ignore temporary files and folders
+*.log
+*.tmp
+.DS_Store
+
+# Ignore build outputs
+bin/
+obj/
+
+# Ignore Visual Studio files
+.vs/
